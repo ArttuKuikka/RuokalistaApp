@@ -6,18 +6,80 @@
     <ScrollView>
         <VerticalStackLayout
             Spacing="10"
-            Padding="30,0"
-            VerticalOptions="Center">
+            Padding="30,20"
+            VerticalOptions="Start"
+            x:Name="MainStack">
 
             
 
             <Label
-                Text="Ruokalista"
+                Text="Tämän&#10;viikon (00)&#10;ruokalista"
                 SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+                FontSize="45"
+                 FontAttributes="Bold"
+                x:Name="Header"/>
 
+
+            <Label
+                Text="Maanatai 00.00"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="25"
+                HorizontalOptions="Center" FontAttributes="Bold" x:Name="MaanantaiHeader" />
+            <Label
+                Text="Possukastike,perunat,maksalaatikko,raastesalaatti,puolukka"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="20"
+                HorizontalOptions="Center" HorizontalTextAlignment="Center" x:Name="MaanantaiRuoka"  />
+
+            <Label
+                Text="Tiistai 00.00"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="25"
+                HorizontalOptions="Center" FontAttributes="Bold" x:Name="TiistaiHeader" />
+            <Label
+                Text="Possukastike,perunat,maksalaatikko,raastesalaatti,puolukka"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="20"
+                HorizontalOptions="Center" HorizontalTextAlignment="Center" x:Name="TiistaiRuoka"/>
+
+            <Label
+                Text="Keskiviikko 00.00"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="25"
+                HorizontalOptions="Center" FontAttributes="Bold" x:Name="KeskiviikkoHeader" />
+            <Label
+                Text="Possukastike,perunat,maksalaatikko,raastesalaatti,puolukka"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="20"
+                HorizontalOptions="Center" HorizontalTextAlignment="Center" x:Name="KeskiviikkoRuoka"  />
+
+            <Label
+                Text="Torstai 00.00"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="25"
+                HorizontalOptions="Center" FontAttributes="Bold" x:Name="TorstaiHeader" />
+            <Label
+                Text="Possukastike,perunat,maksalaatikko,raastesalaatti,puolukka"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="20"
+                HorizontalOptions="Center" HorizontalTextAlignment="Center" x:Name="TorstaiRuoka"  />
+
+            <Label
+                Text="Perjantai 00.00"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="25"
+                HorizontalOptions="Center" FontAttributes="Bold" x:Name="PerjantaiHeader" />
+            <Label
+                Text="Possukastike,perunat,maksalaatikko,raastesalaatti,puolukka"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="20"
+                HorizontalOptions="Center" HorizontalTextAlignment="Center" x:Name="PerjantaiRuoka"  />
             
+            
+            
+
+
+
 
         </VerticalStackLayout>
     </ScrollView>
