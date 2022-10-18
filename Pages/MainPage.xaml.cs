@@ -5,7 +5,7 @@ using System.Net;
 using RuokalistaApp.Models;
 using System.Drawing;
 using Color = Microsoft.Maui.Graphics.Color;
-using Java.Time.Temporal;
+
 
 namespace RuokalistaApp;
 
@@ -19,10 +19,10 @@ public partial class MainPage : ContentPage
 
 
         dothething();
-        
 
 
-        
+
+
     }
 
     public async void dothething()
@@ -33,27 +33,55 @@ public partial class MainPage : ContentPage
 
     public async Task Load()
     {
-
         
+        bool err = false;
 
-        var url = "https://ruokalista.arttukuikka.fi/api/v1/Ruokalista";
-
-        var httpRequest = (HttpWebRequest)null;
-        
+        var code = 0;
+        var result = "";
         try
         {
-            httpRequest = (HttpWebRequest)WebRequest.Create(url);
+           
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://ruokalista.arttukuikka.fi/");
+                
+                //GET Method
+                HttpResponseMessage response = await client.GetAsync("api/v1/Ruokalista");
+                if (response.IsSuccessStatusCode)
+                {
+                    result = await response.Content.ReadAsStringAsync();
+                    
+                }
+                else
+                {
+                    code = (int)response.StatusCode;
+                    throw new Exception("");
+                }
+            }
         }
-        catch (Exception e)
+        catch(Exception)
         {
-            await DisplayAlert("Error", e.Message, "K");
+            err = true;
         }
 
-        var result = "";
-        var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
-        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+        if(err || result == "" || result == null)
         {
-            result = streamReader.ReadToEnd();
+            if(File.Exists(Path.Combine(FileSystem.Current.CacheDirectory, "ruoka.json")) && File.ReadAllText(Path.Combine(FileSystem.Current.CacheDirectory, "ruoka.json")) != null)
+            {
+                
+                App.Current.MainPage.DisplayAlert("Virhe " + code.ToString(), "Virhe yhdistäessä palvelimeen, näytetaan viimeisin paikallisesti tallennettu versio ruokalistasta", "OK");
+
+                result = File.ReadAllText(Path.Combine(FileSystem.Current.CacheDirectory, "ruoka.json"));
+            }
+            else
+            {
+                
+                await App.Current.MainPage.DisplayAlert("Virhe " + code.ToString(), "Virhe yhdistäessä palvelimeen, Tarkista verkkoasetukset. Sovellus sulkeutuu automaattisesti", "OK");
+                Application.Current.Quit();
+
+
+            }
         }
 
         var ruoka = JsonConvert.DeserializeObject<Ruokalista>(result);
@@ -61,24 +89,33 @@ public partial class MainPage : ContentPage
         File.WriteAllText(Path.Combine(FileSystem.Current.CacheDirectory, "ruoka.json"), result);
 
         var lista = new List<Day>();
-        lista.Add(new Day() { ruoka = ruoka.Maanantai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Monday) });
-        lista.Add(new Day() { ruoka = ruoka.Tiistai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Tuesday) });
-        lista.Add(new Day() { ruoka = ruoka.Keskiviikko, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Wednesday) });
-        lista.Add(new Day() { ruoka = ruoka.Torstai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Thursday) });
-        lista.Add(new Day() { ruoka = ruoka.Perjantai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Friday) });
+        try
+        {
+            lista.Add(new Day() { ruoka = ruoka.Maanantai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Monday) });
+            lista.Add(new Day() { ruoka = ruoka.Tiistai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Tuesday) });
+            lista.Add(new Day() { ruoka = ruoka.Keskiviikko, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Wednesday) });
+            lista.Add(new Day() { ruoka = ruoka.Torstai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Thursday) });
+            lista.Add(new Day() { ruoka = ruoka.Perjantai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Friday) });
+        }
+        catch(Exception)
+        {
+            await App.Current.MainPage.DisplayAlert("Virhe", "Virhellistä tietoa havaittu, sovelluksen suoritus lopetetaan", "Ok");
+            Application.Current.Quit();
+           
+        }
 
-        
+
         MainStack.Children.Clear();
 
         MainStack.Children.Add(new Label() { Text = String.Format("Tämän\nviikon ({0})\nruokalista", ruoka.WeekId.ToString()), FontSize = 45, FontAttributes = FontAttributes.Bold });
 
-        
 
-        var paivat = new Dictionary<int, string>() { { 1,"Maanantai"}, { 2, "Tiistai"}, { 3, "Keskiviikko"}, { 4, "Torstai"}, { 5, "Perjantai"} };
+
+        var paivat = new Dictionary<int, string>() { { 1, "Maanantai" }, { 2, "Tiistai" }, { 3, "Keskiviikko" }, { 4, "Torstai" }, { 5, "Perjantai" } };
 
         foreach (var paiva in lista)
         {
-           if(paiva.dateTime.Day == DateTime.Now.Day)
+            if (paiva.dateTime.Day == DateTime.Now.Day)
             {
                 MainStack.Children.Add(new Label() { Text = String.Format("{0} {1}", paivat[(int)paiva.dateTime.DayOfWeek], paiva.dateTime.ToString("dd.MM")), HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold, FontSize = 20, TextColor = Color.FromArgb("FFA500") });
                 MainStack.Children.Add(new Label() { Text = paiva.ruoka, FontSize = 20, HorizontalOptions = LayoutOptions.Center, HorizontalTextAlignment = TextAlignment.Center, TextColor = Color.FromArgb("FFA500") });
@@ -90,7 +127,7 @@ public partial class MainPage : ContentPage
             }
         }
 
-        
+
     }
 
 	
