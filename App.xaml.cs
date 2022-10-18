@@ -7,5 +7,22 @@ public partial class App : Application
 		InitializeComponent();
 
 		MainPage = new AppShell();
-	}
+		if (Preferences.Default.ContainsKey("Teema"))
+		{
+			var key = Preferences.Default.Get("Teema", 0);
+            if(key == 0)
+			{
+				Application.Current.UserAppTheme = AppTheme.Unspecified;
+			}
+			else if(key == 1)
+			{
+                Application.Current.UserAppTheme = AppTheme.Dark;
+            }
+			else if(key == 2)
+			{
+                Application.Current.UserAppTheme = AppTheme.Light;
+            }
+        }
+		
+    }
 }

@@ -10,6 +10,25 @@
             >
 
 
+            <VerticalStackLayout HorizontalOptions="Center" x:Name="TeemaStack">
+                <Label Text="Teema" FontSize="25" HorizontalOptions="Center"></Label>
+                <Border StrokeThickness="5" Padding="0">
+                    <Picker x:Name="ThemePicker" SelectedIndexChanged="picker_SelectedIndexChanged"
+        Title="Valitse teema" HorizontalTextAlignment="Center" VerticalOptions="Center" HorizontalOptions="Center" VerticalTextAlignment="Center" FontSize="20">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Järjestelmä</x:String>
+                                <x:String>Tumma</x:String>
+                                <x:String>Vaalea</x:String>
+
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+                </Border>
+            </VerticalStackLayout>
+
+
+
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Label
                 Text="Lähetä ilmoituksia"
@@ -23,10 +42,10 @@
             <Label Text="TULOSSA!!" FontSize="25" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Red"></Label>
             
             <HorizontalStackLayout Padding="0, 10"></HorizontalStackLayout>
-            <Button Text="Kirjaudu Hallintaan" Padding="0, 10"></Button>
+            <Button Text="Kirjaudu Hallintaan" Padding="0, 10" Clicked="Button_Clicked_1"></Button>
 
             <HorizontalStackLayout Padding="0, 0"></HorizontalStackLayout>
-            <Button Text="Ilmoita bugeista" Padding="0, 10"></Button>
+            <Button Text="Ilmoita bugeista" Clicked="Button_Clicked" Padding="0, 10"></Button>
             
 
             <Label Text="© Arttu Kuikka 2022" HorizontalOptions="Center" VerticalOptions="End" FontSize="15" Padding="0, 30, 0, 0"></Label>
