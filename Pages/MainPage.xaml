@@ -12,7 +12,7 @@
 
 
 
-            <Label Text="Ladataan..." HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="40"></Label>
+            <Label Padding="0, 200" Text="Ladataan..." HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="40"></Label>
             
             
             

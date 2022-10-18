@@ -33,6 +33,7 @@ public partial class MainPage : ContentPage
 
     public async Task Load()
     {
+        //await Task.Delay(10000);
         
         bool err = false;
 
@@ -99,7 +100,7 @@ public partial class MainPage : ContentPage
         }
         catch(Exception)
         {
-            await App.Current.MainPage.DisplayAlert("Virhe", "Virhellistä tietoa havaittu, sovelluksen suoritus lopetetaan", "Ok");
+            await App.Current.MainPage.DisplayAlert("Virhe", "Virhellistä tietoa havaittu, sovelluksen suoritusta ei voida jatkaa", "Ok");
             Application.Current.Quit();
            
         }
