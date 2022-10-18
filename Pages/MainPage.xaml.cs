@@ -17,11 +17,7 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 
-
         dothething();
-
-
-
 
     }
 
@@ -57,6 +53,12 @@ public partial class MainPage : ContentPage
                 else
                 {
                     code = (int)response.StatusCode;
+                    if(code == 404)
+                    {
+                        MainStack.Children.Clear();
+                        MainStack.Children.Add(new Label() { Text = "Tämän viikon ruokalistaa ei ole vielä julkaistu", FontSize = 45, FontAttributes = FontAttributes.Bold });
+                        return;
+                    }
                     throw new Exception("");
                 }
             }
