@@ -16,13 +16,37 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 
+
+        dothething();
         
 
+
         
+    }
+
+    public async void dothething()
+    {
+        await Load();
+        
+    }
+
+    public async Task Load()
+    {
+
+
 
         var url = "https://ruokalista.arttukuikka.fi/api/v1/Ruokalista";
 
-        var httpRequest = (HttpWebRequest)WebRequest.Create(url);
+        var httpRequest = (HttpWebRequest)null;
+        
+        try
+        {
+            httpRequest = (HttpWebRequest)WebRequest.Create(url);
+        }
+        catch (Exception e)
+        {
+            await DisplayAlert("Error", e.Message, "K");
+        }
 
         var result = "";
         var httpResponse = (HttpWebResponse)httpRequest.GetResponse();
@@ -31,7 +55,7 @@ public partial class MainPage : ContentPage
             result = streamReader.ReadToEnd();
         }
 
-       var ruoka = JsonConvert.DeserializeObject<Ruokalista>(result);
+        var ruoka = JsonConvert.DeserializeObject<Ruokalista>(result);
 
         Header.Text = Header.Text.Replace("00", ruoka.WeekId.ToString());
 
@@ -42,7 +66,7 @@ public partial class MainPage : ContentPage
         PerjantaiHeader.Text = PerjantaiHeader.Text.Replace("00.00", System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Friday).ToString("dd.MM"));
 
         int day = (int)DateTime.Now.DayOfWeek;
-        
+
 
 
         switch (day)
@@ -71,15 +95,13 @@ public partial class MainPage : ContentPage
                 break;
 
         }
-        
+
 
         MaanantaiRuoka.Text = ruoka.Maanantai;
         TiistaiRuoka.Text = ruoka.Tiistai;
         KeskiviikkoRuoka.Text = ruoka.Keskiviikko;
         TorstaiRuoka.Text = ruoka.Torstai;
         PerjantaiRuoka.Text = ruoka.Perjantai;
-
-        
     }
 
 	
