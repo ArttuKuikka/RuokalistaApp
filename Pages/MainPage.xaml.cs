@@ -5,6 +5,7 @@ using System.Net;
 using RuokalistaApp.Models;
 using System.Drawing;
 using Color = Microsoft.Maui.Graphics.Color;
+using Java.Time.Temporal;
 
 namespace RuokalistaApp;
 
@@ -33,7 +34,7 @@ public partial class MainPage : ContentPage
     public async Task Load()
     {
 
-
+        
 
         var url = "https://ruokalista.arttukuikka.fi/api/v1/Ruokalista";
 
@@ -57,51 +58,39 @@ public partial class MainPage : ContentPage
 
         var ruoka = JsonConvert.DeserializeObject<Ruokalista>(result);
 
-        Header.Text = Header.Text.Replace("00", ruoka.WeekId.ToString());
+        File.WriteAllText(Path.Combine(FileSystem.Current.CacheDirectory, "ruoka.json"), result);
 
-        MaanantaiHeader.Text = MaanantaiHeader.Text.Replace("00.00", System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Monday).ToString("dd.MM"));
-        TiistaiHeader.Text = TiistaiHeader.Text.Replace("00.00", System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Tuesday).ToString("dd.MM"));
-        KeskiviikkoHeader.Text = KeskiviikkoHeader.Text.Replace("00.00", System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Wednesday).ToString("dd.MM"));
-        TorstaiHeader.Text = TorstaiHeader.Text.Replace("00.00", System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Thursday).ToString("dd.MM"));
-        PerjantaiHeader.Text = PerjantaiHeader.Text.Replace("00.00", System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Friday).ToString("dd.MM"));
+        var lista = new List<Day>();
+        lista.Add(new Day() { ruoka = ruoka.Maanantai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Monday) });
+        lista.Add(new Day() { ruoka = ruoka.Tiistai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Tuesday) });
+        lista.Add(new Day() { ruoka = ruoka.Keskiviikko, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Wednesday) });
+        lista.Add(new Day() { ruoka = ruoka.Torstai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Thursday) });
+        lista.Add(new Day() { ruoka = ruoka.Perjantai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Friday) });
 
-        int day = (int)DateTime.Now.DayOfWeek;
+        
+        MainStack.Children.Clear();
 
+        MainStack.Children.Add(new Label() { Text = String.Format("Tämän\nviikon ({0})\nruokalista", ruoka.WeekId.ToString()), FontSize = 45, FontAttributes = FontAttributes.Bold });
 
+        
 
-        switch (day)
+        var paivat = new Dictionary<int, string>() { { 1,"Maanantai"}, { 2, "Tiistai"}, { 3, "Keskiviikko"}, { 4, "Torstai"}, { 5, "Perjantai"} };
+
+        foreach (var paiva in lista)
         {
-            case 1:
-                MaanantaiHeader.TextColor = Color.FromArgb("FFA500");
-                MaanantaiRuoka.TextColor = Color.FromArgb("FFA500");
-                break;
-            case 2:
-                TiistaiHeader.TextColor = Color.FromArgb("FFA500");
-                TiistaiRuoka.TextColor = Color.FromArgb("FFA500");
-                break;
-            case 3:
-                KeskiviikkoHeader.TextColor = Color.FromArgb("FFA500");
-                KeskiviikkoRuoka.TextColor = Color.FromArgb("FFA500");
-                break;
-            case 4:
-                TorstaiHeader.TextColor = Color.FromArgb("FFA500");
-                TorstaiRuoka.TextColor = Color.FromArgb("FFA500");
-                break;
-            case 5:
-                PerjantaiHeader.TextColor = Color.FromArgb("FFA500");
-                PerjantaiRuoka.TextColor = Color.FromArgb("FFA500");
-                break;
-            default:
-                break;
-
+           if(paiva.dateTime.Day == DateTime.Now.Day)
+            {
+                MainStack.Children.Add(new Label() { Text = String.Format("{0} {1}", paivat[(int)paiva.dateTime.DayOfWeek], paiva.dateTime.ToString("dd.MM")), HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold, FontSize = 20, TextColor = Color.FromArgb("FFA500") });
+                MainStack.Children.Add(new Label() { Text = paiva.ruoka, FontSize = 20, HorizontalOptions = LayoutOptions.Center, HorizontalTextAlignment = TextAlignment.Center, TextColor = Color.FromArgb("FFA500") });
+            }
+            else
+            {
+                MainStack.Children.Add(new Label() { Text = String.Format("{0} {1}", paivat[(int)paiva.dateTime.DayOfWeek], paiva.dateTime.ToString("dd.MM")), HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold, FontSize = 20 });
+                MainStack.Children.Add(new Label() { Text = paiva.ruoka, FontSize = 20, HorizontalOptions = LayoutOptions.Center, HorizontalTextAlignment = TextAlignment.Center });
+            }
         }
 
-
-        MaanantaiRuoka.Text = ruoka.Maanantai;
-        TiistaiRuoka.Text = ruoka.Tiistai;
-        KeskiviikkoRuoka.Text = ruoka.Keskiviikko;
-        TorstaiRuoka.Text = ruoka.Torstai;
-        PerjantaiRuoka.Text = ruoka.Perjantai;
+        
     }
 
 	
