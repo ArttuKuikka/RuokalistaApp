@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RuokalistaApp.Pages.AdminPage"
+             >
+    <VerticalStackLayout
+        Spacing="10"
+            Padding="20,20" >
+        <Button Text="Luo uusi" ></Button>
+
+        <ScrollView>
+            <VerticalStackLayout>
+                <HorizontalStackLayout Padding="0, 5" Spacing="15">
+                    <VerticalStackLayout>
+                        <Label Text="Viikko 52" FontSize="20"></Label>
+                        <Label Text="2022"></Label>
+                    </VerticalStackLayout>
+                    <Button Text="Muokkaa"></Button>
+
+                    <Button Text="Tiedot"></Button>
+
+                </HorizontalStackLayout>
+
+                
+                
+               
+            </VerticalStackLayout>
+        </ScrollView>
+    </VerticalStackLayout>
+    
+</ContentPage>

@@ -59,8 +59,8 @@ public partial class SettingsPage : ContentPage
        
     }
 
-    private void Button_Clicked_1(object sender, EventArgs e)
+    private async void Button_Clicked_1(object sender, EventArgs e)
     {
-       
+        await Shell.Current.GoToAsync("LoginPage");
     }
 }

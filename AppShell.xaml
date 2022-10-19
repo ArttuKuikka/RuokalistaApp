@@ -7,7 +7,7 @@
     xmlns:pages="clr-namespace:RuokalistaApp.Pages"
     Shell.FlyoutBehavior="Disabled">
 
-    <TabBar>
+    <TabBar x:Name="tabbar">
         <Tab Icon="menu.png" Title="Ruokalista">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}"/>
         </Tab>
