@@ -9,17 +9,8 @@
         <Button Text="Luo uusi" ></Button>
 
         <ScrollView>
-            <VerticalStackLayout>
-                <HorizontalStackLayout Padding="0, 5" Spacing="15">
-                    <VerticalStackLayout>
-                        <Label Text="Viikko 52" FontSize="20"></Label>
-                        <Label Text="2022"></Label>
-                    </VerticalStackLayout>
-                    <Button Text="Muokkaa"></Button>
-
-                    <Button Text="Tiedot"></Button>
-
-                </HorizontalStackLayout>
+            <VerticalStackLayout x:Name="RuokaView">
+                
 
                 
                 
