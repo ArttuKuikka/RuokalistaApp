@@ -6,11 +6,11 @@
     <VerticalStackLayout
         Spacing="10"
             Padding="20,20" >
-        <Button Text="Luo uusi" ></Button>
+        <Button Text="Luo uusi" Clicked="CreateNewButton_Clicked" ></Button>
 
         <ScrollView>
             <VerticalStackLayout x:Name="RuokaView">
-                
+                <Label Text="Ladataan..." FontSize="25"></Label>
 
                 
                 

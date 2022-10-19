@@ -1,4 +1,4 @@
-using Java.Time.Temporal;
+
 
 namespace RuokalistaApp.Pages;
 
@@ -18,6 +18,8 @@ public partial class AdminPage : ContentPage
 
 	public async Task Load()
 	{
+
+		await Task.Delay(10000);
 		RuokaView.Children.Clear();
 
 		var viikko = 52;
@@ -35,5 +37,10 @@ public partial class AdminPage : ContentPage
             RuokaView.Children.Add(Ruoka);
         }
 
+	}
+
+	private async void CreateNewButton_Clicked(object sender, EventArgs e)
+	{
+		await Shell.Current.GoToAsync("LuoUusi");
 	}
 }

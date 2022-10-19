@@ -9,8 +9,9 @@ public partial class AppShell : Shell
 		InitializeComponent();
 
         Routing.RegisterRoute("LoginPage", typeof(LoginPage));
+        Routing.RegisterRoute("LuoUusi", typeof(CreateNewPage));
 
-		if(Preferences.Default.Get("IsAdmin", false))
+        if (Preferences.Default.Get("IsAdmin", false))
 		{
             tabbar.Items.Add(new ShellContent()
             {
