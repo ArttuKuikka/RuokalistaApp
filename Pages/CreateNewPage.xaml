@@ -24,6 +24,8 @@
             <Label Text="Perjantai"></Label>
             <Entry Placeholder="Perjantai" x:Name="PerjantaiEntry"></Entry>
 
+            <Label x:Name="VaroitusLabel" TextColor="Red" FontSize="15"></Label>
+
             <HorizontalStackLayout Spacing="15">
                 <Button Text="Peruuta" Clicked="Peruuta_Clicked"></Button>
                 <Button Text="valmis" Clicked="Valmis_Clicked"></Button>
