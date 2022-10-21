@@ -11,6 +11,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("LoginPage", typeof(LoginPage));
         Routing.RegisterRoute("LuoUusi", typeof(CreateNewPage));
         Routing.RegisterRoute("Tiedot", typeof(InfoPage));
+        Routing.RegisterRoute("Muokkaa", typeof(EditPage));
 
         if (Preferences.Default.Get("IsAdmin", false))
 		{
