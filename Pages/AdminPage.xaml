@@ -6,15 +6,19 @@
     <VerticalStackLayout
         Spacing="10"
             Padding="20,20" >
-        <Button Text="Luo uusi" Clicked="CreateNewButton_Clicked" ></Button>
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Button Text="Luo uusi" Clicked="CreateNewButton_Clicked" ></Button>
+            <Button Text="Päivitä sivu" Clicked="Refress_Clicked" ></Button>
+            <Button Text="Kirjaudu ulos" Clicked="Logout_Clicked" ></Button>
+        </HorizontalStackLayout>
 
         <ScrollView>
             <VerticalStackLayout x:Name="RuokaView">
                 <Label Text="Ladataan..." FontSize="25"></Label>
 
-                
-                
-               
+
+
+
             </VerticalStackLayout>
         </ScrollView>
     </VerticalStackLayout>

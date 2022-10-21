@@ -88,23 +88,31 @@ public partial class CreateNewPage : ContentPage
                 
             };
 
-            HttpResponseMessage result = await client.SendAsync(request);
-            if (result.IsSuccessStatusCode)
+            try
             {
-                await Shell.Current.GoToAsync("..");
-            }
-            else
-            {
-                if (result.StatusCode == HttpStatusCode.Unauthorized)
+                HttpResponseMessage result = await client.SendAsync(request);
+                if (result.IsSuccessStatusCode)
                 {
-                    await DisplayAlert("Virhe", "Virheellinen k‰ytt‰j‰tunnus tai salasana, kirjaudu uudelleen sis‰‰n", "Ok");
-                    return;
+                    await Shell.Current.GoToAsync("..");
                 }
                 else
                 {
-                    await DisplayAlert("Virhe " + result.StatusCode.ToString(), "Virhe yhdist‰ess‰ palvelimeen tai virhe palvelimella", "Ok");
-                    return;
+                    if (result.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        await DisplayAlert("Virhe", "Virheellinen k‰ytt‰j‰tunnus tai salasana, kirjaudu uudelleen sis‰‰n", "Ok");
+                        return;
+                    }
+                    else
+                    {
+                        await DisplayAlert("Virhe " + result.StatusCode.ToString(), "Virhe yhdist‰ess‰ palvelimeen tai virhe palvelimella", "Ok");
+                        return;
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                await DisplayAlert("Virhe yhdist‰ess‰ palvelimeen", "Virhe: " + ex.Message, "Ok");
+                return;
             }
         }
     }
