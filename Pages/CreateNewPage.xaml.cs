@@ -1,6 +1,5 @@
 using Newtonsoft.Json;
 using RuokalistaApp.Models;
-using static Android.Content.ClipData;
 using System.Net;
 using System.Text;
 

@@ -59,8 +59,14 @@ public partial class AdminPage : ContentPage
             tekstit.Children.Add(new Label() { FontSize = 20, Text = "Viikko " + ruoka.WeekId.ToString() });
             tekstit.Children.Add(new Label() { Text = ruoka.Year.ToString() });
             Ruoka.Children.Add(tekstit);
+            var tiedot = new Button() { Text = "Tiedot" };
+            var navigationParameter = new Dictionary<string, object>
+    {
+         ["Ruokalista"] = ruoka
+    };
+            tiedot.Clicked += async (sender, args) => await Shell.Current.GoToAsync("Tiedot", navigationParameter);
+            Ruoka.Children.Add(tiedot);
             Ruoka.Children.Add(new Button() { Text = "Muokkaa" });
-            Ruoka.Children.Add(new Button() { Text = "Tiedot" });
             RuokaView.Children.Add(Ruoka);
         }
 

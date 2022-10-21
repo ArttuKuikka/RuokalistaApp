@@ -10,6 +10,7 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute("LoginPage", typeof(LoginPage));
         Routing.RegisterRoute("LuoUusi", typeof(CreateNewPage));
+        Routing.RegisterRoute("Tiedot", typeof(InfoPage));
 
         if (Preferences.Default.Get("IsAdmin", false))
 		{
