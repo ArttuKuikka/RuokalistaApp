@@ -21,7 +21,7 @@ public partial class AdminPage : ContentPage
 
 	public async Task Load()
 	{
-		RuokaView.Children.Clear();
+		
 
         var result = "";
         using (var client = new HttpClient())
@@ -52,7 +52,9 @@ public partial class AdminPage : ContentPage
 
         var ruokaarray = JsonConvert.DeserializeObject<Ruokalista[]>(result);
 
-        foreach(var ruoka in ruokaarray)
+        RuokaView.Children.Clear();
+
+        foreach (var ruoka in ruokaarray)
         {
             var Ruoka = new HorizontalStackLayout() { Padding = new Thickness(0, 5), Spacing = 15 };
             var tekstit = new VerticalStackLayout();
