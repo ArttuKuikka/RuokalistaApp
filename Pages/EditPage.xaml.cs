@@ -9,6 +9,7 @@ public partial class EditPage : ContentPage, IQueryAttributable
 {
 
     int id = 0;
+    private Ruokalista Ruokalista;
 	public EditPage()
 	{
 		InitializeComponent();
@@ -17,7 +18,7 @@ public partial class EditPage : ContentPage, IQueryAttributable
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         var RuokaL = query["Ruokalista"] as Ruokalista;
-
+        Ruokalista = RuokaL;
         if (RuokaL != null)
         {
             id = RuokaL.Id;
@@ -141,5 +142,74 @@ public partial class EditPage : ContentPage, IQueryAttributable
     private async void Peruuta_Clicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("..", true);
+    }
+
+    private async void Poista_Clicked(object sender, EventArgs e)
+    {
+        var ruoka = Ruokalista;
+        
+        var result = "";
+        using (var client = new HttpClient())
+        {
+            var response = await client.GetAsync($"https://ruokalista.arttukuikka.fi/api/v1/Ruokalista/GetId/{ruoka.Year}/{ruoka.WeekId}");
+            if (response.IsSuccessStatusCode)
+            {
+                result = await response.Content.ReadAsStringAsync();
+            }
+            else
+            {
+                await DisplayAlert("Virhe " + response.StatusCode.ToString(), "Virhe ladatessa id tä", "Ok");
+                
+                return;
+            }
+        }
+
+        ruoka.Id = int.Parse(result);
+
+        
+        bool answer = await DisplayAlert("Oletko varma?", $"Oletko varma että haluat poistaa viikon {ruoka.WeekId} ruokalistan", "Kyllä", "Ei");
+        if (answer)
+        {
+
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", await SecureStorage.Default.GetAsync("token"));
+               
+
+                //GET Method
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsync($"https://ruokalista.arttukuikka.fi/api/v1/Ruokalista/Delete/{ruoka.Id}", null);
+                    if (response.IsSuccessStatusCode)
+                    {
+
+
+                    }
+                    else
+                    {
+                        if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                        {
+                            await DisplayAlert("Virhe " + response.StatusCode.ToString(), "Kirjautumisesi on vanhentunut, kirjaudu uudelleen sisään asetukset välilehdeltä", "ok");
+                            Preferences.Default.Set("IsAdmin", false);
+                        }
+                        else
+                        {
+                            await DisplayAlert("Virhe " + response.StatusCode.ToString(), "virhe suorittaessa komentoa\n\n" + await response.Content.ReadAsStringAsync(), "ok");
+                            return;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Virhe yhdistäessä palvelimeen", "virhe ladatessa sisältöä\n\n" + ex.Message, "ok");
+                    return;
+                }
+            }
+
+            await Shell.Current.GoToAsync("..", true);
+        }
+
+
+        
     }
 }
