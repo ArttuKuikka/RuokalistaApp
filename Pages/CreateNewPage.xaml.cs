@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using RuokalistaApp.Models;
 using System.Net;
 using System.Text;
-
+using RuokalistaApp.Misc;
 namespace RuokalistaApp.Pages;
 
 public partial class CreateNewPage : ContentPage
@@ -31,6 +31,19 @@ public partial class CreateNewPage : ContentPage
                 using FileStream localFileStream = File.OpenWrite(localFilePath);
 
                 await sourceStream.CopyToAsync(localFileStream);
+
+                sourceStream.Dispose();
+                localFileStream.Dispose();
+
+                var ocr = new OCR();
+                try
+                {
+                    await ocr.PerformOCR();
+                }
+                catch(Exception err)
+                {
+                    await DisplayAlert("Virhe", err.Message, "Ok");
+                }
             }
         }
     }
