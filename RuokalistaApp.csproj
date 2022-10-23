@@ -50,10 +50,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="google-services.json" />
 	  <None Remove="Resources\Images\admin.png" />
 	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\settings.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <GoogleServicesJson Include="google-services.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -79,6 +84,18 @@
 	  <MauiXaml Update="Pages\SettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
+	  <PackageReference Include="Xamarin.Firebase.Messaging">
+	    <Version>123.0.8</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xamarin.Google.Dagger">
+	    <Version>2.41.0.2</Version>
+	  </PackageReference>
+	  <PackageReference Include="Xamarin.GooglePlayServices.Base">
+	    <Version>118.1.0</Version>
+	  </PackageReference>
 	</ItemGroup>
 
 </Project>

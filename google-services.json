@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "593402317688",
+    "project_id": "ruokalista-41952",
+    "storage_bucket": "ruokalista-41952.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593402317688:android:08608b02e5ac39aa6c168d",
+        "android_client_info": {
+          "package_name": "com.arttu.ruokalista"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "593402317688-a0nilun93tr4pjek5r0k8ddjg2r8d0af.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB7c6ufBIuStwQ68s0ewjY_-PBxRTbzB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "593402317688-a0nilun93tr4pjek5r0k8ddjg2r8d0af.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

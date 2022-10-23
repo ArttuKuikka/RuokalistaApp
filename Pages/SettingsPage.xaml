@@ -29,17 +29,10 @@
 
 
 
-            <HorizontalStackLayout HorizontalOptions="Center">
-                <Label
-                Text="Lähetä ilmoituksia"
-                FontSize="25"
-                 />
+            
+            <Label Text="Sovelluksen ilmoituksia voi hallita puhelimen asetuksissa" ></Label>
 
-                <Switch IsToggled="True" HorizontalOptions="Center" VerticalOptions="Center" />
-            </HorizontalStackLayout>
-            <Label Text="Saa joka päivä klo 8 ilmoitus päivän ruoasta ja saa ilmoituksia ruokalista päivityksistä." ></Label>
-
-            <Label Text="TULOSSA!!" FontSize="25" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Red"></Label>
+            
             
             <HorizontalStackLayout Padding="0, 10"></HorizontalStackLayout>
             <Button Text="Kirjaudu Hallintaan" Padding="0, 10" Clicked="Button_Clicked_1"></Button>
