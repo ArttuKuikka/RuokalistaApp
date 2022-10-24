@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Firebase.Messaging;
 
 namespace RuokalistaApp;
 
@@ -20,6 +21,8 @@ public class MainActivity : MauiAppCompatActivity
 
     private void CreateNotificationChannel()
     {
+        FirebaseMessaging.Instance.SubscribeToTopic("Ilmoitukset");
+
         if(OperatingSystem.IsOSPlatformVersionAtLeast("android", 26))
         {
             var channel = new NotificationChannel(Channel_ID, "kaikki Ilmoitukset", NotificationImportance.Default);
