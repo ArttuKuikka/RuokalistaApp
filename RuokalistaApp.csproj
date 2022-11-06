@@ -51,6 +51,9 @@
 
 	<ItemGroup>
 	  <None Remove="google-services.json" />
+	  <None Remove="Platforms\Android\Resources\drawable\widgetpreview.jpg" />
+	  <None Remove="Platforms\Android\Resources\layout\Widget.axml" />
+	  <None Remove="Platforms\Android\Resources\xml\appwidgetprovider.xml" />
 	  <None Remove="Resources\Images\admin.png" />
 	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\menu.png" />
