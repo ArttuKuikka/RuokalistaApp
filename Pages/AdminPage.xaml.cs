@@ -75,10 +75,21 @@ public partial class AdminPage : ContentPage
 
         foreach (var ruoka in ruokaarray)
         {
+            var viikko = System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now);
+
             var Ruoka = new HorizontalStackLayout() { Padding = new Thickness(0, 5), Spacing = 15 };
             var tekstit = new VerticalStackLayout();
-            tekstit.Children.Add(new Label() { FontSize = 20, Text = "Viikko " + ruoka.WeekId.ToString() });
+
+            if (ruoka.WeekId == viikko)
+            {
+                tekstit.Children.Add(new Label() { FontSize = 20, Text = "Viikko " + ruoka.WeekId.ToString(), TextColor = Colors.Orange });
+            }
+            else
+            {
+                tekstit.Children.Add(new Label() { FontSize = 20, Text = "Viikko " + ruoka.WeekId.ToString() });
+            }
             tekstit.Children.Add(new Label() { Text = ruoka.Year.ToString() });
+
             Ruoka.Children.Add(tekstit);
 
             var tiedot = new Button() { Text = "Tiedot" };
