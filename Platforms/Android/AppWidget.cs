@@ -72,22 +72,50 @@ namespace RuokalistaApp
                 if (DateTime.Now.DayOfWeek == DayOfWeek.Monday)
                 {
                     widgetView.SetTextColor(Resource.Id.Maanantai, color: Color.Orange);
+                    //muut valkoseks
+                    widgetView.SetTextColor(Resource.Id.Tiistai, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Keskiviikko, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Torstai, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Perjantai, color: Color.White);
+
                 }
                 else if(DateTime.Now.DayOfWeek == DayOfWeek.Tuesday)
                 {
                     widgetView.SetTextColor(Resource.Id.Tiistai, color: Color.Orange);
+
+                    //muut valkoseks
+                    widgetView.SetTextColor(Resource.Id.Maanantai, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Keskiviikko, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Torstai, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Perjantai, color: Color.White);
                 }
                 else if (DateTime.Now.DayOfWeek == DayOfWeek.Wednesday)
                 {
                     widgetView.SetTextColor(Resource.Id.Keskiviikko, color: Color.Orange);
+
+                    //muut valkoseks
+                    widgetView.SetTextColor(Resource.Id.Tiistai, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Maanantai, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Torstai, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Perjantai, color: Color.White);
                 }
                 else if (DateTime.Now.DayOfWeek == DayOfWeek.Thursday)
                 {
                     widgetView.SetTextColor(Resource.Id.Torstai, color: Color.Orange);
+                    //muut valkoseks
+                    widgetView.SetTextColor(Resource.Id.Tiistai, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Keskiviikko, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Maanantai, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Perjantai, color: Color.White);
                 }
                 else if (DateTime.Now.DayOfWeek == DayOfWeek.Friday)
                 {
                     widgetView.SetTextColor(Resource.Id.Perjantai, color: Color.Orange);
+                    //muut valkoseks
+                    widgetView.SetTextColor(Resource.Id.Tiistai, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Keskiviikko, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Torstai, color: Color.White);
+                    widgetView.SetTextColor(Resource.Id.Maanantai, color: Color.White);
                 }
 
             }
