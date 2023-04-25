@@ -3,24 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RuokalistaApp.Pages.AdminPage"
              >
-    <VerticalStackLayout
-        Spacing="10"
-            Padding="20,20" >
-        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-            <Button Text="Luo uusi" Clicked="CreateNewButton_Clicked" ></Button>
-            <Button Text="Päivitä sivu" Clicked="Refress_Clicked" ></Button>
-            <Button Text="Kirjaudu ulos" Clicked="Logout_Clicked" ></Button>
-        </HorizontalStackLayout>
+    <RefreshView Refreshing="Refress_Clicked" x:Name="refressView">
+        <ScrollView Padding="20,20" >
 
-        <ScrollView>
-            <VerticalStackLayout x:Name="RuokaView">
-                <Label Text="Ladataan..." FontSize="25"></Label>
+            <VerticalStackLayout>
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Button Text="Luo uusi" Clicked="CreateNewButton_Clicked"></Button>
+                    
+                    
+                </HorizontalStackLayout>
 
-
+                <VerticalStackLayout x:Name="RuokaView">
+                    <Label Text="Ladataan..." FontSize="25"></Label>
 
 
+
+
+                </VerticalStackLayout>
             </VerticalStackLayout>
         </ScrollView>
-    </VerticalStackLayout>
+    </RefreshView>
     
 </ContentPage>

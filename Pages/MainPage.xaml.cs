@@ -42,9 +42,18 @@ public partial class MainPage : ContentPage
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://ruokalista.arttukuikka.fi/");
+
+                var url = "api/v1/Ruokalista";
+                bool seuraavaViikko = false;
+                if(DateTime.Today.DayOfWeek == DayOfWeek.Sunday || DateTime.Today.DayOfWeek == DayOfWeek.Saturday)
+                {
+                    var nextweek = System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now) + 1;
+					url = $"api/v1/Ruokalista/{DateTime.Now.Year}/{nextweek}";
+                    seuraavaViikko=true;
+                }
                 
                 //GET Method
-                HttpResponseMessage response = await client.GetAsync("api/v1/Ruokalista");
+                HttpResponseMessage response = await client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
                     result = await response.Content.ReadAsStringAsync();
@@ -55,8 +64,15 @@ public partial class MainPage : ContentPage
                     code = (int)response.StatusCode;
                     if(code == 404)
                     {
-                        MainStack.Children.Clear();
-                        MainStack.Children.Add(new Label() { Text = "Tämän viikon ruokalistaa ei ole vielä julkaistu", FontSize = 45, FontAttributes = FontAttributes.Bold });
+						MainStack.Children.Clear();
+						if (seuraavaViikko)
+                        {
+							MainStack.Children.Add(new Label() { Text = "Seuraavan viikon ruokalistaa ei ole vielä julkaistu", FontSize = 45, FontAttributes = FontAttributes.Bold });
+						}
+                        else
+                        {
+							MainStack.Children.Add(new Label() { Text = "Tämän viikon ruokalistaa ei ole vielä julkaistu", FontSize = 45, FontAttributes = FontAttributes.Bold });
+						}
                         return;
                     }
                     throw new Exception("");

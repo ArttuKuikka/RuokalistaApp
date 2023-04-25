@@ -7,6 +7,10 @@ public partial class SettingsPage : ContentPage
 		InitializeComponent();
 
         ThemePicker.SelectedIndex = Preferences.Default.Get("Teema", 0);
+        if(Preferences.Default.Get("IsAdmin", false) == true)
+        {
+            LoginButton.Text = "Kirjaudu ulos";
+        }
     }
 
 	private async void Button_Clicked(object sender, EventArgs e)
@@ -61,6 +65,17 @@ public partial class SettingsPage : ContentPage
 
     private async void Button_Clicked_1(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("LoginPage");
+        if(LoginButton.Text == "Kirjaudu ulos")
+        {
+			SecureStorage.Default.RemoveAll();
+			Preferences.Default.Set("IsAdmin", false);
+			await DisplayAlert("Kirjauduttu ulos", "Viimeistelläksi uloskirjautumisen käynnistä sovellus uudelleen", "Ok");
+			App.Current.Quit();
+		}
+        else
+        {
+			await Shell.Current.GoToAsync("LoginPage");
+		}
+        
     }
 }

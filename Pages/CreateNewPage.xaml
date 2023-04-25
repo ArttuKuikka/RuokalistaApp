@@ -7,7 +7,7 @@
         <VerticalStackLayout Spacing="10"
             Padding="20,20">
 
-            <Button Text="Käytä kuvantunnistusta" Clicked="Kuvatunnistus_Clicked"></Button>
+            
             <Label Text="Vuosi"></Label>
             <Entry Placeholder="Vuosi" x:Name="VuosiEntry"></Entry>
             <Label Text="Viikko"></Label>

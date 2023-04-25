@@ -32,7 +32,7 @@ public partial class AdminPage : ContentPage
     public async Task Load()
     {
 
-
+        refressView.IsRefreshing= true;
         var result = "";
         using (var client = new HttpClient())
         {
@@ -109,8 +109,8 @@ public partial class AdminPage : ContentPage
         }
 
 
-
-    }
+		refressView.IsRefreshing = false;
+	}
 
     private async Task Muokkaa_Clicked(Ruokalista ruoka, Button muokkaa)
     {
@@ -151,11 +151,5 @@ public partial class AdminPage : ContentPage
 
 
 
-    private async void Logout_Clicked(object sender, EventArgs e)
-    {
-        SecureStorage.Default.RemoveAll();
-        Preferences.Default.Set("IsAdmin", false);
-        await DisplayAlert("Kirjauduttu ulos", "Viimeistelläksi uloskirjautumisen käynnistä sovellus uudelleen", "Ok");
-        App.Current.Quit();
-    }
+   
 }

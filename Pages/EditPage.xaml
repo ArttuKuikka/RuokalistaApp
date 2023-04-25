@@ -7,7 +7,7 @@
         <VerticalStackLayout Spacing="10"
             Padding="20,20">
 
-            <Button Text="Käytä kuvantunnistusta" Clicked="Kuvatunnistus_Clicked"></Button>
+            
             <Button Text="Poista" Clicked="Poista_Clicked" BackgroundColor="Red"></Button>
             <Label Text="Vuosi" ></Label>
             <Entry Placeholder="Vuosi" IsEnabled="False" x:Name="VuosiEntry"></Entry>
