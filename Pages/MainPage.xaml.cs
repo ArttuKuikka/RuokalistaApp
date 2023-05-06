@@ -32,8 +32,8 @@ public partial class MainPage : ContentPage
         //await Task.Delay(10000);
         
         bool err = false;
-
-        var code = 0;
+		bool seuraavaViikko = false;
+		var code = 0;
         var result = "";
         try
         {
@@ -44,8 +44,8 @@ public partial class MainPage : ContentPage
                 client.BaseAddress = new Uri("https://ruokalista.arttukuikka.fi/");
 
                 var url = "api/v1/Ruokalista";
-                bool seuraavaViikko = false;
-                if(DateTime.Today.DayOfWeek == DayOfWeek.Sunday || DateTime.Today.DayOfWeek == DayOfWeek.Saturday)
+                
+                if(DateTime.Today.DayOfWeek == DayOfWeek.Sunday || DateTime.Today.DayOfWeek == DayOfWeek.Saturday || (DateTime.Today.DayOfWeek == DayOfWeek.Friday && DateTime.Now.Hour > 12))
                 {
                     var nextweek = System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now) + 1;
 					url = $"api/v1/Ruokalista/{DateTime.Now.Year}/{nextweek}";
@@ -126,7 +126,14 @@ public partial class MainPage : ContentPage
 
         MainStack.Children.Clear();
 
-        MainStack.Children.Add(new Label() { Text = String.Format("Tämän\nviikon ({0})\nruokalista", ruoka.WeekId.ToString()), FontSize = 45, FontAttributes = FontAttributes.Bold });
+        if (seuraavaViikko)
+        {
+			MainStack.Children.Add(new Label() { Text = String.Format("Seuraavan\nviikon ({0})\nruokalista", ruoka.WeekId.ToString()), FontSize = 45, FontAttributes = FontAttributes.Bold });
+		}
+        else
+        {
+			MainStack.Children.Add(new Label() { Text = String.Format("Tämän\nviikon ({0})\nruokalista", ruoka.WeekId.ToString()), FontSize = 45, FontAttributes = FontAttributes.Bold });
+		}
 
 
 
