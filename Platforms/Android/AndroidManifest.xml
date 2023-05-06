@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.arttu.ruokalista" android:versionCode="6" android:versionName="6.0">
-	<application android:allowBackup="false" android:icon="@mipmap/logo_fix" android:roundIcon="@mipmap/logo_fix" android:label="Ruokalista" android:supportsRtl="true">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.arttu.ruokalista" android:versionCode="7" android:versionName="7.0">
+	<application android:allowBackup="false" android:icon="@mipmap/logo_fix" android:label="Ruokalista" android:supportsRtl="true">
 		<receiver android:name="com.arttu.ruokalista.AppWidget" android:exported="true" android:label="Ruokalista">
 			<intent-filter>
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
