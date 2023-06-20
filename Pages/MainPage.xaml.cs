@@ -54,7 +54,7 @@ public partial class MainPage : ContentPage
                 
                 //GET Method
                 HttpResponseMessage response = await client.GetAsync(url);
-                if (response.IsSuccessStatusCode)
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
                     result = await response.Content.ReadAsStringAsync();
                     
