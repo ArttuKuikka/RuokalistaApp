@@ -5,7 +5,7 @@
              NavigationPage.HasNavigationBar="False">
     <RefreshView Refreshing="RefreshView_Refreshing" x:Name="RefreshView1">
         <ScrollView>
-            <WebView Source="https://ruokalistadev.arttukuikka.fi/Aanestys/Tulokset?isApp=true" x:Name="webview1"></WebView>
+            <WebView Source="https://ruokalista.arttukuikka.fi/Aanestys/Tulokset?isApp=true" x:Name="webview1"></WebView>
         </ScrollView>
     </RefreshView>
 </ContentPage>

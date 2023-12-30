@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.arttu.ruokalista" android:versionCode="9" android:versionName="9.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.arttu.ruokalista" android:versionCode="9" android:versionName="9.1">
 	<application android:allowBackup="false" android:icon="@mipmap/logo_fix" android:label="Ruokalista" android:supportsRtl="true">
 		<receiver android:name="com.arttu.ruokalista.AppWidget" android:exported="true" android:label="Ruokalista">
 			<intent-filter>
