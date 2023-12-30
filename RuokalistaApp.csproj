@@ -19,8 +19,8 @@
 		<ApplicationIdGuid>4164B0C9-F4F0-4091-90E9-68B0B5E47644</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>5.0</ApplicationDisplayVersion>
-		<ApplicationVersion>5</ApplicationVersion>
+		<ApplicationDisplayVersion>9.0</ApplicationDisplayVersion>
+		<ApplicationVersion>9</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -32,43 +32,43 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-maccatalyst|AnyCPU'">
-	  <ApplicationDisplayVersion>7.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>7</ApplicationVersion>
+	  <ApplicationDisplayVersion>9.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>9</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-maccatalyst|AnyCPU'">
-	  <ApplicationDisplayVersion>7.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>7</ApplicationVersion>
+	  <ApplicationDisplayVersion>9.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>9</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-android|AnyCPU'">
-	  <ApplicationDisplayVersion>7.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>7</ApplicationVersion>
+	  <ApplicationDisplayVersion>9.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>9</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-android|AnyCPU'">
-	  <ApplicationDisplayVersion>7.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>7</ApplicationVersion>
+	  <ApplicationDisplayVersion>9.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>9</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
-	  <ApplicationDisplayVersion>7.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>7</ApplicationVersion>
+	  <ApplicationDisplayVersion>9.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>9</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
-	  <ApplicationDisplayVersion>7.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>7</ApplicationVersion>
+	  <ApplicationDisplayVersion>9.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>9</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationDisplayVersion>7.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>7</ApplicationVersion>
+	  <ApplicationDisplayVersion>9.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>9</ApplicationVersion>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-windows10.0.19041.0|AnyCPU'">
-	  <ApplicationDisplayVersion>7.0</ApplicationDisplayVersion>
-	  <ApplicationVersion>7</ApplicationVersion>
+	  <ApplicationDisplayVersion>9.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>9</ApplicationVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -98,6 +98,7 @@
 	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\menu.png" />
 	  <None Remove="Resources\Images\settings.png" />
+	  <None Remove="Resources\Images\votingbox.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -125,6 +126,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SettingsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\VotePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

@@ -11,6 +11,9 @@
         <Tab Icon="menu.png" Title="Ruokalista">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}"/>
         </Tab>
+        <Tab Icon="votingbox.png" Title="Äänestys">
+            <ShellContent ContentTemplate="{DataTemplate pages:VotePage}"/>
+        </Tab>
         <Tab Icon="settings.png" Title="Asetukset">
             <ShellContent Route="Page1" ContentTemplate="{DataTemplate pages:SettingsPage}"/>
            
