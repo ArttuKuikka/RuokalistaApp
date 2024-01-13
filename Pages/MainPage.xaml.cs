@@ -5,6 +5,7 @@ using System.Net;
 using RuokalistaApp.Models;
 using System.Drawing;
 using Color = Microsoft.Maui.Graphics.Color;
+using System;
 
 
 namespace RuokalistaApp;
@@ -35,6 +36,7 @@ public partial class MainPage : ContentPage
 		bool seuraavaViikko = false;
 		var code = 0;
         var result = "";
+        var nextweek = System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now) + 1;
         try
         {
            
@@ -47,7 +49,7 @@ public partial class MainPage : ContentPage
                 
                 if(DateTime.Today.DayOfWeek == DayOfWeek.Sunday || DateTime.Today.DayOfWeek == DayOfWeek.Saturday || (DateTime.Today.DayOfWeek == DayOfWeek.Friday && DateTime.Now.Hour > 12))
                 {
-                    var nextweek = System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now) + 1;
+                    
 					url = $"api/v1/Ruokalista/{DateTime.Now.Year}/{nextweek}";
                     seuraavaViikko=true;
                 }
@@ -153,9 +155,30 @@ public partial class MainPage : ContentPage
             }
         }
 
+        //seuraava viikko button
+        if (!seuraavaViikko) 
+        {
+            using(var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://ruokalista.arttukuikka.fi/");
+                var url = $"api/v1/Ruokalista/{DateTime.Now.Year}/{nextweek}";
+
+                HttpResponseMessage response = await client.GetAsync(url);
+                if(response.IsSuccessStatusCode)
+                {
+                    var seuraavabtn = new Button() { Text = "Näytä seuraavan viikon ruokalista", HorizontalOptions = LayoutOptions.FillAndExpand, Margin = 5, Padding = 10, };
+                    seuraavabtn.Clicked += async (sender, args) => await Seuraavabtn_Clicked(response);
+                    MainStack.Children.Add(seuraavabtn);
+                }
+            }
+        }
+
 
     }
 
-	
+    private async Task Seuraavabtn_Clicked(HttpResponseMessage response)
+    {
+        await Shell.Current.GoToAsync("SeuraavaViikko", new Dictionary<string, object> { ["response"] = response });
+    }
 }
 
