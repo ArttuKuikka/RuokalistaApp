@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.arttu.ruokalista" android:versionCode="11" android:versionName="11.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.arttu.ruokalista" android:versionCode="12" android:versionName="12.0">
 	<application android:allowBackup="false" android:icon="@mipmap/logo_fix" android:label="Ruokalista" android:supportsRtl="true">
 		<receiver android:name="com.arttu.ruokalista.AppWidget" android:exported="true" android:label="Ruokalista">
 			<intent-filter>
@@ -19,5 +19,5 @@
 			<data android:scheme="mailto" />
 		</intent>
 	</queries>
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="33" />
+	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="34" />
 </manifest>
