@@ -1,7 +1,10 @@
+using System;
+
 namespace RuokalistaApp.Pages;
 
 public partial class SettingsPage : ContentPage
 {
+    private static int SecretCounter = 0;
 	public SettingsPage()
 	{
 		InitializeComponent();
@@ -20,7 +23,7 @@ public partial class SettingsPage : ContentPage
 
             string subject = "Ruokalista BugReport";
             string body = "Kirjoita tähän lyhyt kuvaus ongelmastasi, kerro myös laitteesi merkki ja malli";
-            string[] recipients = new[] { "arttu@arttukuikka.fi" };
+            string[] recipients = new[] { "ruokalista@arttukuikka.fi" };
 
             var message = new EmailMessage
             {
@@ -34,7 +37,7 @@ public partial class SettingsPage : ContentPage
         }
         else
         {
-            await DisplayAlert("Automaattinen viestin lähettäminen epäonnistui", "Lähetä tietoa bugeista sähköpostilla osoitteeseen arttu@arttukuikka.fi", "ok");
+            await DisplayAlert("Automaattinen viestin lähettäminen epäonnistui", "Lähetä tietoa bugeista sähköpostilla osoitteeseen ruokalista@arttukuikka.fi", "OK");
         }
     }
 
@@ -78,4 +81,30 @@ public partial class SettingsPage : ContentPage
 		}
         
     }
+
+	private async void OnLabelTapped(object sender, EventArgs e)
+	{
+		var label = sender as Label;
+		var argument = (string)((TapGestureRecognizer)label.GestureRecognizers[0]).CommandParameter;
+
+		// Handle the tap event and use the argument
+		if(argument == "gh")
+        {
+			await Launcher.OpenAsync(new Uri("https://github.com/ArttuKuikka"));
+
+		}
+        else if(argument == "rl")
+        {
+			await Launcher.OpenAsync(new Uri("https://ruokalista.arttukuikka.fi"));
+		}
+		else if (argument == "secret")
+		{
+            SecretCounter++;
+
+            if(SecretCounter <= 6)
+            {
+
+            }
+		}
+	}
 }

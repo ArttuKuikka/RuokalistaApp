@@ -39,34 +39,37 @@
 
             <HorizontalStackLayout Padding="0, 0"></HorizontalStackLayout>
             <Button Text="Ilmoita bugeista" Clicked="Button_Clicked" Padding="0, 10"></Button>
-            
 
-            <Label Text="© Arttu Kuikka 2023" HorizontalOptions="Center" VerticalOptions="End" FontSize="15" Padding="0, 30, 0, 0"></Label>
 
-            <Label 
-        Text="ruokalista.arttukuikka.fi"
-        VerticalOptions="Center" 
-        HorizontalOptions="Center" FontSize="15" >
-
+            <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="15">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Github.com/ArttuKuikka" TextDecorations="Underline" TextColor="Blue" />
+                    </FormattedString>
+                </Label.FormattedText>
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding TapCommand}"
-                                      CommandParameter="https://ruokalista.arttukuikka.fi" />
+                    <TapGestureRecognizer Tapped="OnLabelTapped" CommandParameter="gh" />
                 </Label.GestureRecognizers>
-
             </Label>
 
-            <Label 
-        Text="github.com/ArttuKuikka"
-        VerticalOptions="Center" 
-        HorizontalOptions="Center" FontSize="15" >
-
+            <Label VerticalOptions="Center" HorizontalOptions="Center" FontSize="15">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Ruokalista.ArttuKuikka.fi" TextDecorations="Underline" TextColor="Blue" />
+                    </FormattedString>
+                </Label.FormattedText>
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding TapCommand}"
-                                      CommandParameter="https://github.com/ArttuKuikka" />
+                    <TapGestureRecognizer Tapped="OnLabelTapped" CommandParameter="rl" />
                 </Label.GestureRecognizers>
-
             </Label>
-            
+
+            <Label Text="© Arttu Kuikka 2023" HorizontalOptions="Center" VerticalOptions="End" FontSize="15" Padding="0, 30, 0, 0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLabelTapped" CommandParameter="secret" />
+                </Label.GestureRecognizers>
+            </Label>
+
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
