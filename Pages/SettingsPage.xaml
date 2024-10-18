@@ -63,7 +63,7 @@
                 </Label.GestureRecognizers>
             </Label>
 
-            <Label Text="© Arttu Kuikka 2023" HorizontalOptions="Center" VerticalOptions="End" FontSize="15" Padding="0, 30, 0, 0">
+            <Label x:Name="CopyrightLabel" Text="© Arttu Kuikka 2024" HorizontalOptions="Center" VerticalOptions="End" FontSize="15" Padding="0, 30, 0, 0">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnLabelTapped" CommandParameter="secret" />
                 </Label.GestureRecognizers>

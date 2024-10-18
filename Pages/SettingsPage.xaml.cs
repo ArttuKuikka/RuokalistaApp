@@ -1,5 +1,6 @@
 using System;
-
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 namespace RuokalistaApp.Pages;
 
 public partial class SettingsPage : ContentPage
@@ -9,7 +10,9 @@ public partial class SettingsPage : ContentPage
 	{
 		InitializeComponent();
 
-        ThemePicker.SelectedIndex = Preferences.Default.Get("Teema", 0);
+        CopyrightLabel.Text = $"© {DateTime.Now.Year} Arttu Kuikka";
+
+		ThemePicker.SelectedIndex = Preferences.Default.Get("Teema", 0);
         if(Preferences.Default.Get("IsAdmin", false) == true)
         {
             LoginButton.Text = "Kirjaudu ulos";
@@ -101,10 +104,49 @@ public partial class SettingsPage : ContentPage
 		{
             SecretCounter++;
 
-            if(SecretCounter <= 6)
+            if(SecretCounter > 2)
             {
 
-            }
+
+				string text = $"{6 - SecretCounter} klikkauksta j‰ljell‰";
+				ToastDuration duration = ToastDuration.Short;
+				double fontSize = 14;
+
+				var toast = Toast.Make(text, duration, fontSize);
+
+				await toast.Show();
+			}
+
+            if(SecretCounter >= 6)
+            {
+                var isDev = Preferences.Default.Get("IsDeveloper", false);
+
+                if (!isDev)
+                {
+                    Preferences.Default.Set("IsDeveloper", true);
+
+
+					string text = $"Olet nyt kehitt‰j‰, k‰ynnist‰ sovellus uudelleen!";
+					ToastDuration duration = ToastDuration.Long;
+					double fontSize = 14;
+
+					var toast = Toast.Make(text, duration, fontSize);
+
+					await toast.Show();
+				}
+                else
+                {
+					Preferences.Default.Set("IsDeveloper", false);
+
+					string text = $"Et ole en‰‰n kehitt‰j‰, k‰ynnist‰ sovellus uudelleen!";
+					ToastDuration duration = ToastDuration.Long;
+					double fontSize = 14;
+
+					var toast = Toast.Make(text, duration, fontSize);
+
+					await toast.Show();
+				}
+			}
 		}
 	}
 }
