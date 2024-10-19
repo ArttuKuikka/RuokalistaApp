@@ -29,11 +29,36 @@
 
 
 
-            
-            <Label Text="Sovelluksen ilmoituksia voi hallita puhelimen asetuksissa" ></Label>
 
+            <Label Text="Ilmoitukset" FontSize="25" HorizontalOptions="Center"></Label>
+
+            <Grid ColumnDefinitions="*,Auto">
+                <Label VerticalOptions="Center" FontSize="Body" Text="Ruokalista" Grid.Column="0" />
+                <Switch IsToggled="false" Scale="1.2" Grid.Column="1" HorizontalOptions="End" />
+
+            </Grid>
+
+            <Grid ColumnDefinitions="*,Auto">
+                <Label VerticalOptions="Center" FontSize="Body" Text="Kasvisruokalista" Grid.Column="0" />
+                <Switch IsToggled="false" Scale="1.2" Grid.Column="1" HorizontalOptions="End" />
+
+            </Grid>
+
+            <Grid ColumnDefinitions="*,Auto">
+                <Label VerticalOptions="Center" FontSize="Body" Text="Yleiset" Grid.Column="0" />
+                <Switch IsToggled="false" Scale="1.2" Grid.Column="1" HorizontalOptions="End" />
+
+            </Grid>
+
+            <Label Text="Muuta" FontSize="25" HorizontalOptions="Center"></Label>
             
-            
+            <Grid ColumnDefinitions="*,Auto">
+                <Label VerticalOptions="Center" FontSize="Body" Text="Piilota kasvisruokalista" Grid.Column="0" />
+                <Switch IsToggled="false" Scale="1.2" Grid.Column="1" HorizontalOptions="End" />
+
+            </Grid>
+
+
             <HorizontalStackLayout Padding="0, 10"></HorizontalStackLayout>
             <Button x:Name="LoginButton" Text="Kirjaudu Hallintaan" Padding="0, 10" Clicked="Button_Clicked_1"></Button>
 

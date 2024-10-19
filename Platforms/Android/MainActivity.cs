@@ -22,6 +22,7 @@ public class MainActivity : MauiAppCompatActivity
     private void CreateNotificationChannel()
     {
         FirebaseMessaging.Instance.SubscribeToTopic("Ilmoitukset");
+        FirebaseMessaging.Instance.SubscribeToTopic("TestiTopic1");
 
         if(OperatingSystem.IsOSPlatformVersionAtLeast("android", 26))
         {
@@ -29,7 +30,11 @@ public class MainActivity : MauiAppCompatActivity
 
             var notificationmanager = (NotificationManager)GetSystemService(Android.Content.Context.NotificationService);
             notificationmanager.CreateNotificationChannel(channel);
-        }
+
+			var channel2 = new NotificationChannel("", "Testi1", NotificationImportance.Default);
+
+			notificationmanager.CreateNotificationChannel(channel2);
+		}
         
     }
 }
