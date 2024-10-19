@@ -19,15 +19,16 @@ public partial class MainPage : ContentPage
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();
-		Initialize();
+
+		Initialize(MainStack);
 	}
 
-	public async void Initialize()
+	public async void Initialize(VerticalStackLayout stack, bool kasvisruoka = false)
     {
-        await Load();
+        await Load(stack, kasvisruoka);
     }
 
-    public async Task Load()
+    public async Task Load(VerticalStackLayout stack, bool kasvisruoka = false)
     {
 		string baseAddress = "https://ruokalista.arttukuikka.fi";
 
@@ -43,10 +44,27 @@ public partial class MainPage : ContentPage
 		HttpClient client = new HttpClient();
 		client.BaseAddress = new Uri(baseAddress);
 
-		var request = "/api/v1/ruokalista";
+		var request = "";
+		if (!kasvisruoka)
+		{
+			request = "/api/v1/ruokalista";
+		}
+		else
+		{
+			request = "/api/v1/kasvisruokalista";
+		}
+
+
 		if (IsNextWeek())
 		{
-			request = $"/api/v1/ruokalista/{DateTime.Now.Year}/{System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now) + 1}";
+			if (!kasvisruoka)
+			{
+				request = $"/api/v1/ruokalista/{DateTime.Now.Year}/{System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now) + 1}";
+			}
+			else
+			{
+				request = $"/api/v1/kasvisruokalista/{DateTime.Now.Year}/{System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now) + 1}";
+			}
 			showingNextWeeksMenu = true;
 		}
 
@@ -63,15 +81,22 @@ public partial class MainPage : ContentPage
 				if (!IsRuokaNullOrEmpty(ruoka))
 				{
 					//cache ruokalista for offline use
-					File.WriteAllText(Path.Combine(FileSystem.Current.CacheDirectory, "ruoka.json"), output);
+					if (!kasvisruoka)
+					{
+						File.WriteAllText(Path.Combine(FileSystem.Current.CacheDirectory, "ruoka.json"), output);
+					}
+					else
+					{
+						File.WriteAllText(Path.Combine(FileSystem.Current.CacheDirectory, "kasvisruoka.json"), output);
+					}
 
-					Render(ruoka, showingNextWeeksMenu);
+					Render(ruoka, showingNextWeeksMenu, stack, kasvisruoka);
 				}
 				else
 				{
 					//error
 					//yritä käyttää cachea jos on tälle viikolle
-					await Error("Palvelin palautti ruokalistan virheellisessä muodossa");
+					await Error("Palvelin palautti ruokalistan virheellisessä muodossa", stack, kasvisruoka);
 				}
 
 
@@ -81,21 +106,35 @@ public partial class MainPage : ContentPage
 			{
 				//ruokalistaa ei ole vielä olemassa
 
-				MainStack.Children.Clear();
+				stack.Children.Clear();
 				if (showingNextWeeksMenu)
 				{
-					MainStack.Children.Add(new Label() { Text = "Seuraavan viikon ruokalistaa ei ole vielä julkaistu", FontSize = 45, FontAttributes = FontAttributes.Bold });
+					if (!kasvisruoka)
+					{
+						stack.Children.Add(new Label() { Text = "Seuraavan viikon ruokalistaa ei ole vielä julkaistu", FontSize = 45, FontAttributes = FontAttributes.Bold });
+					}
+					else
+					{
+						stack.Children.Add(new Label() { Text = "Seuraavan viikon kasvisruokalistaa ei ole vielä julkaistu", FontSize = 45, FontAttributes = FontAttributes.Bold });
+					}
 				}
 				else
 				{
-					MainStack.Children.Add(new Label() { Text = "Tämän viikon ruokalistaa ei ole vielä julkaistu", FontSize = 45, FontAttributes = FontAttributes.Bold });
+					if (!kasvisruoka)
+					{
+						stack.Children.Add(new Label() { Text = "Tämän viikon ruokalistaa ei ole vielä julkaistu", FontSize = 45, FontAttributes = FontAttributes.Bold });
+					}
+					else
+					{
+						stack.Children.Add(new Label() { Text = "Tämän viikon kasvisruokalistaa ei ole vielä julkaistu", FontSize = 45, FontAttributes = FontAttributes.Bold });
+					}
 				}
 			}
 			else
 			{
 				//error
 				//yritä käyttää cachea jos on tälle viikolle
-				await Error($"Virheellinen pyyntö, Tarkista verkkoyhteytesi. {response.StatusCode} {response.ReasonPhrase}");
+				await Error($"Virheellinen pyyntö, Tarkista verkkoyhteytesi. {response.StatusCode} {response.ReasonPhrase}", stack, kasvisruoka);
 			}
 
 		}
@@ -104,7 +143,7 @@ public partial class MainPage : ContentPage
 			//error ei esim internettiä tai lentotila yms
 			//yritä käyttää cachea jos on tälle viikolle
 			//ei varmaa tuu mitään muita erroreita niin eiköhän tää riitä
-			await Error($"Virhe lähettäessä pyyntöä palvelimelle, tarkista verkkoyhteytesi. {e.Message}");
+			await Error($"Virhe lähettäessä pyyntöä palvelimelle, tarkista verkkoyhteytesi. {e.Message}", stack, kasvisruoka);
 		}
 
 
@@ -119,14 +158,28 @@ public partial class MainPage : ContentPage
 				using (var client2 = new HttpClient())
 				{
 					client2.BaseAddress = new Uri(baseAddress);
-					var url = $"api/v1/Ruokalista/{DateTime.Now.Year}/{System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now) + 1}";
+					var url = "";
+					if (!kasvisruoka)
+					{
+						url = $"api/v1/Ruokalista/{DateTime.Now.Year}/{System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now) + 1}";
+					}
+					else
+					{
+						url = $"api/v1/KasvisRuokalista/{DateTime.Now.Year}/{System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now) + 1}";
+					}
 
 					HttpResponseMessage response = await client2.GetAsync(url);
 					if (response.IsSuccessStatusCode)
 					{
-						var seuraavabtn = new Button() { Text = "Näytä seuraavan viikon ruokalista", HorizontalOptions = LayoutOptions.FillAndExpand, Margin = 5, Padding = 10, };
+						var btntext = "Näytä seuraavan viikon ruokalista";
+						if (kasvisruoka)
+						{
+							btntext = "Näytä seuraavan viikon kasvisruokalista";
+						}
+
+						var seuraavabtn = new Button() { Text = btntext, HorizontalOptions = LayoutOptions.FillAndExpand, Margin = 5, Padding = 10, };
 						seuraavabtn.Clicked += async (sender, args) => await Seuraavabtn_Clicked(response);
-						MainStack.Children.Add(seuraavabtn);
+						stack.Children.Add(seuraavabtn);
 					}
 				}
 			}
@@ -139,33 +192,43 @@ public partial class MainPage : ContentPage
 
 	}
 
-	private async Task Error(string reason)
+	private async Task Error(string reason, VerticalStackLayout stack, bool kasvisruokalista = false)
 	{
 		await App.Current.MainPage.DisplayAlert("Virhe", reason, "OK");
 
 		if (File.Exists(Path.Combine(FileSystem.Current.CacheDirectory, "ruoka.json")))
 		{
-			var output = File.ReadAllText(Path.Combine(FileSystem.Current.CacheDirectory, "ruoka.json"));
-			Ruokalista ruoka = JsonConvert.DeserializeObject<Ruokalista>(output);
-			if(ruoka.WeekId == System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now))
+			var output = "";
+			if (kasvisruokalista)
 			{
-				Render(ruoka, false);
+				output = File.ReadAllText(Path.Combine(FileSystem.Current.CacheDirectory, "kasvisruoka.json"));
 			}
 			else
 			{
-				MainStack.Children.Clear();
-				MainStack.Children.Add(new Label() { Text = "Ruokalistaa ei voitu ladata", FontSize = 45, FontAttributes = FontAttributes.Bold });
+				output = File.ReadAllText(Path.Combine(FileSystem.Current.CacheDirectory, "ruoka.json"));
+			}
+
+
+			Ruokalista ruoka = JsonConvert.DeserializeObject<Ruokalista>(output);
+			if(ruoka.WeekId == System.Globalization.ISOWeek.GetWeekOfYear(DateTime.Now))
+			{
+				Render(ruoka, false, stack, kasvisruokalista);
+			}
+			else
+			{
+				stack.Children.Clear();
+				stack.Children.Add(new Label() { Text = "Ruokalistaa ei voitu ladata", FontSize = 45, FontAttributes = FontAttributes.Bold });
 			}
 		}
 		else
 		{
-			MainStack.Children.Clear();
-			MainStack.Children.Add(new Label() { Text = "Ruokalistaa ei voitu ladata", FontSize = 45, FontAttributes = FontAttributes.Bold });
+			stack.Children.Clear();
+			stack.Children.Add(new Label() { Text = "Ruokalistaa ei voitu ladata", FontSize = 45, FontAttributes = FontAttributes.Bold });
 		}
 	}
 
 
-	private void Render(Ruokalista? ruoka, bool seuraavaViikko)
+	private void Render(Ruokalista? ruoka, bool seuraavaViikko, VerticalStackLayout stack, bool kasvisruokalista = false)
 	{
 		var lista = new List<Day>();
 
@@ -175,15 +238,29 @@ public partial class MainPage : ContentPage
 		lista.Add(new Day() { ruoka = ruoka.Torstai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Thursday) });
 		lista.Add(new Day() { ruoka = ruoka.Perjantai, dateTime = System.Globalization.ISOWeek.ToDateTime(ruoka.Year, ruoka.WeekId, DayOfWeek.Friday) });
 
-		MainStack.Children.Clear();
+		stack.Children.Clear();
 
 		if (seuraavaViikko)
 		{
-			MainStack.Children.Add(new Label() { Text = String.Format("Seuraavan\nviikon ({0})\nruokalista", ruoka.WeekId.ToString()), FontSize = 45, FontAttributes = FontAttributes.Bold });
+			if (!kasvisruokalista)
+			{
+				stack.Children.Add(new Label() { Text = String.Format("Seuraavan\nviikon ({0})\nruokalista", ruoka.WeekId.ToString()), FontSize = 45, FontAttributes = FontAttributes.Bold });
+			}
+			else
+			{
+				stack.Children.Add(new Label() { Text = String.Format("Seuraavan\nviikon ({0})\nkasvisruokalista", ruoka.WeekId.ToString()), FontSize = 45, FontAttributes = FontAttributes.Bold });
+			}
 		}
 		else
 		{
-			MainStack.Children.Add(new Label() { Text = String.Format("Tämän\nviikon ({0})\nruokalista", ruoka.WeekId.ToString()), FontSize = 45, FontAttributes = FontAttributes.Bold });
+			if (!kasvisruokalista)
+			{
+				stack.Children.Add(new Label() { Text = String.Format("Tämän\nviikon ({0})\nruokalista", ruoka.WeekId.ToString()), FontSize = 45, FontAttributes = FontAttributes.Bold });
+			}
+			else
+			{
+				stack.Children.Add(new Label() { Text = String.Format("Tämän\nviikon ({0})\nkasvisruokalista", ruoka.WeekId.ToString()), FontSize = 45, FontAttributes = FontAttributes.Bold });
+			}
 		}
 
 
@@ -194,13 +271,13 @@ public partial class MainPage : ContentPage
 		{
 			if (paiva.dateTime.Day == DateTime.Now.Day)
 			{
-				MainStack.Children.Add(new Label() { Text = String.Format("{0} {1}", paivat[(int)paiva.dateTime.DayOfWeek], paiva.dateTime.ToString("dd.MM")), HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold, FontSize = 20, TextColor = Color.FromArgb("FFA500") });
-				MainStack.Children.Add(new Label() { Text = paiva.ruoka, FontSize = 20, HorizontalOptions = LayoutOptions.Center, HorizontalTextAlignment = TextAlignment.Center, TextColor = Color.FromArgb("FFA500") });
+				stack.Children.Add(new Label() { Text = String.Format("{0} {1}", paivat[(int)paiva.dateTime.DayOfWeek], paiva.dateTime.ToString("dd.MM")), HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold, FontSize = 20, TextColor = Color.FromArgb("FFA500") });
+				stack.Children.Add(new Label() { Text = paiva.ruoka, FontSize = 20, HorizontalOptions = LayoutOptions.Center, HorizontalTextAlignment = TextAlignment.Center, TextColor = Color.FromArgb("FFA500") });
 			}
 			else
 			{
-				MainStack.Children.Add(new Label() { Text = String.Format("{0} {1}", paivat[(int)paiva.dateTime.DayOfWeek], paiva.dateTime.ToString("dd.MM")), HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold, FontSize = 20 });
-				MainStack.Children.Add(new Label() { Text = paiva.ruoka, FontSize = 20, HorizontalOptions = LayoutOptions.Center, HorizontalTextAlignment = TextAlignment.Center });
+				stack.Children.Add(new Label() { Text = String.Format("{0} {1}", paivat[(int)paiva.dateTime.DayOfWeek], paiva.dateTime.ToString("dd.MM")), HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold, FontSize = 20 });
+				stack.Children.Add(new Label() { Text = paiva.ruoka, FontSize = 20, HorizontalOptions = LayoutOptions.Center, HorizontalTextAlignment = TextAlignment.Center });
 			}
 		}
 	}

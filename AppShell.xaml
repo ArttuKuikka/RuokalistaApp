@@ -11,6 +11,9 @@
         <Tab Icon="menu.png" Title="Ruokalista">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}"/>
         </Tab>
+        <Tab Icon="menu.png" Title="Kasvisruokalista">
+            <ShellContent ContentTemplate="{DataTemplate local:KasvisruokalistaPage}"/>
+        </Tab>
         <Tab Icon="votingbox.png" Title="Äänestys">
             <ShellContent ContentTemplate="{DataTemplate pages:VotePage}"/>
         </Tab>
