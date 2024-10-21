@@ -10,6 +10,7 @@ using Application = Microsoft.Maui.Controls.Application;
 #if ANDROID
 using Android.Content;
 using Android.Provider;
+using Firebase.Messaging;
 #endif
 
 
@@ -141,6 +142,10 @@ public partial class SettingsPage : ContentPage
                     Preferences.Default.Set("IsDeveloper", true);
 
 
+#if ANDROID
+					FirebaseMessaging.Instance.SubscribeToTopic("Testing");
+#endif
+
 					string text = $"Olet nyt kehitt‰j‰, k‰ynnist‰ sovellus uudelleen!";
 					ToastDuration duration = ToastDuration.Long;
 					double fontSize = 14;
@@ -152,6 +157,10 @@ public partial class SettingsPage : ContentPage
                 else
                 {
 					Preferences.Default.Set("IsDeveloper", false);
+
+#if ANDROID
+					FirebaseMessaging.Instance.UnsubscribeFromTopic("Testing");
+#endif
 
 					string text = $"Et ole en‰‰n kehitt‰j‰, k‰ynnist‰ sovellus uudelleen!";
 					ToastDuration duration = ToastDuration.Long;
