@@ -3,7 +3,9 @@ using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using RuokalistaApp.Models;
 using Android.OS;
-
+using Microsoft.Maui;
+using static System.Net.Mime.MediaTypeNames;
+using Application = Microsoft.Maui.Controls.Application;
 
 #if ANDROID
 using Android.Content;
@@ -28,7 +30,9 @@ public partial class SettingsPage : ContentPage
         {
             LoginButton.Text = "Kirjaudu ulos";
         }
-    }
+
+		PiilotaKasvisruokalista.IsToggled = Preferences.Get("PiilotaKasvis", false);
+	}
 
 	private async void Button_Clicked(object sender, EventArgs e)
 	{
@@ -177,5 +181,11 @@ public partial class SettingsPage : ContentPage
             DisplayAlert("Virhe", "Ilmoitusasetusten avaaminen ei onnistunut", "OK");
 		}
 #endif
+	}
+
+	private void PiilotaKasvisruokalista_Toggled(object sender, ToggledEventArgs e)
+	{
+		Preferences.Set("PiilotaKasvis", e.Value);
+
 	}
 }

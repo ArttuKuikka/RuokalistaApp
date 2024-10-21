@@ -24,6 +24,11 @@ public partial class AppShell : Shell
                 ContentTemplate = new DataTemplate(() => new AdminPage())
             });
         }
+
+        if(Preferences.Get("PiilotaKasvis", false))
+        {
+            tabbar.Items.Remove(KasvisruokaTab);
+        }
 		
         
     }

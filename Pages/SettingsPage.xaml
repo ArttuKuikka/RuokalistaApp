@@ -39,9 +39,9 @@
             
             <Grid ColumnDefinitions="*,Auto">
                 <Label VerticalOptions="Center" FontSize="Body" Text="Piilota kasvisruokalista" Grid.Column="0" />
-                <Switch IsToggled="false" Scale="1.2" x:Name="PiilotaKasvisruokalista" Grid.Column="1" HorizontalOptions="End" />
-
+                <Switch IsToggled="False" Scale="1.2" x:Name="PiilotaKasvisruokalista" Grid.Column="1" HorizontalOptions="End" Toggled="PiilotaKasvisruokalista_Toggled" />
             </Grid>
+            <Label HorizontalOptions="Center" FontSize="Caption">(Muutokset näkyvät uudelleenkäynnistyksen jälkeen)</Label>
 
 
             <HorizontalStackLayout Padding="0, 10"></HorizontalStackLayout>
