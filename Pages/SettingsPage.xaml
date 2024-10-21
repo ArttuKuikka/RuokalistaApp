@@ -31,7 +31,7 @@
 
 
             <Label Text="Ilmoitukset" FontSize="25" HorizontalOptions="Center"></Label>
-            <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="Voit valita haluamasi ilmoituskategoriat puhelimen ilmoitusasetuksista. Voit esimerkikiksi päättää haluatko ilmoituksia vain kasvisruokalistasta tai ruokalistasta"></Label>
+            <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="Voit valita haluamasi ilmoituskategoriat puhelimen ilmoitusasetuksista. Voit esimerkiksi päättää, haluatko ilmoituksia vain kasvisruokalistasta tai ruokalistasta."></Label>
             <Button x:Name="NotifBtn" Text="Avaa ilmoitusasetukset" Padding="0, 10" Clicked="NotifBtn_Clicked"></Button>
 
 

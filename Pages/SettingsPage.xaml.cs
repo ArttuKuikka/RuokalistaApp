@@ -2,8 +2,17 @@ using System;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
 using RuokalistaApp.Models;
+using Android.OS;
+
+
+#if ANDROID
+using Android.Content;
+using Android.Provider;
+#endif
+
+
 namespace RuokalistaApp.Pages;
-using Microsoft.Extensions.DependencyInjection;
+
 
 public partial class SettingsPage : ContentPage
 {
@@ -155,6 +164,18 @@ public partial class SettingsPage : ContentPage
 
 	private void NotifBtn_Clicked(object sender, EventArgs e)
 	{
-		
+#if ANDROID
+        try
+        {
+			var intent = new Intent(Settings.ActionAppNotificationSettings);
+			intent.PutExtra(Settings.ExtraAppPackage, Android.App.Application.Context.PackageName);
+			intent.AddFlags(ActivityFlags.NewTask);
+			Android.App.Application.Context.StartActivity(intent);
+		}
+        catch (Exception)
+        {
+            DisplayAlert("Virhe", "Ilmoitusasetusten avaaminen ei onnistunut", "OK");
+		}
+#endif
 	}
 }
