@@ -8,8 +8,6 @@ namespace RuokalistaApp;
 [Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
 public class MainActivity : MauiAppCompatActivity
 {
-    internal static readonly string Channel_ID = "Main";
-    internal static readonly int NotificationID = 101;
     protected override void OnCreate(Bundle savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
@@ -19,22 +17,39 @@ public class MainActivity : MauiAppCompatActivity
         
     }
 
+
     private void CreateNotificationChannel()
     {
-        FirebaseMessaging.Instance.SubscribeToTopic("Ilmoitukset");
-        FirebaseMessaging.Instance.SubscribeToTopic("TestiTopic1");
+        var isFirstTime = Preferences.Get("IsFirstTime", true);
 
-        if(OperatingSystem.IsOSPlatformVersionAtLeast("android", 26))
+        if(isFirstTime)
         {
-            var channel = new NotificationChannel(Channel_ID, "kaikki Ilmoitukset", NotificationImportance.Default);
+			//FirebaseMessaging.Instance.SubscribeToTopic("Ilmoitukset");
+			FirebaseMessaging.Instance.SubscribeToTopic("Testing");
 
-            var notificationmanager = (NotificationManager)GetSystemService(Android.Content.Context.NotificationService);
-            notificationmanager.CreateNotificationChannel(channel);
+			if (OperatingSystem.IsOSPlatformVersionAtLeast("android", 26))
+			{
+				var notificationmanager = (NotificationManager)GetSystemService(Android.Content.Context.NotificationService);
 
-			var channel2 = new NotificationChannel("", "Testi1", NotificationImportance.Default);
+                //poista vanha ruokalista kanava
+                try
+                {
+					notificationmanager.DeleteNotificationChannel("Main");
+				}
+                catch(Exception)
+                { }
 
-			notificationmanager.CreateNotificationChannel(channel2);
+				notificationmanager.CreateNotificationChannel(new NotificationChannel("Ruokalista", "Ruokalista", NotificationImportance.Default));
+				notificationmanager.CreateNotificationChannel(new NotificationChannel("Kasvisruokalista", "Kasvisruokalista", NotificationImportance.None));
+				notificationmanager.CreateNotificationChannel(new NotificationChannel("Yleiset", "Yleiset", NotificationImportance.Default));
+
+
+			}
+
+			Preferences.Set("IsFirstTime", false);
 		}
+
+		
         
     }
 }

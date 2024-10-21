@@ -33,20 +33,21 @@ namespace RuokalistaApp.Platforms.Android.Services
             base.OnMessageReceived(message);
             var notification = message.GetNotification();
 
-            SendNotification(notification.Body, notification.Title, message.Data);
+            SendNotification(notification.Body, notification.Title, message.Data, notification.ChannelId);
         }
 
-        private void SendNotification(string messageBody, string title, IDictionary<string, string> data)
+        private void SendNotification(string messageBody, string title, IDictionary<string, string> data, string channel)
         {
 
-            var notificationbuilder = new NotificationCompat.Builder(this, MainActivity.Channel_ID)
+            var notificationbuilder = new NotificationCompat.Builder(this, channel)
                 .SetContentTitle(title)
                 .SetContentTitle(messageBody)
-                .SetChannelId(MainActivity.Channel_ID)
-                .SetSmallIcon(0);
+                .SetChannelId(channel)
+                .SetSubText(channel)
+				.SetSmallIcon(Resource.Drawable.logo);
 
             var notificationmanager = NotificationManager.FromContext(this);
-            notificationmanager.Notify(MainActivity.NotificationID, notificationbuilder.Build());
+            notificationmanager.Notify(Random.Shared.Next(0, 100), notificationbuilder.Build());
         }
 
     }

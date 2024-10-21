@@ -1,7 +1,9 @@
 using System;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using RuokalistaApp.Models;
 namespace RuokalistaApp.Pages;
+using Microsoft.Extensions.DependencyInjection;
 
 public partial class SettingsPage : ContentPage
 {
@@ -21,7 +23,7 @@ public partial class SettingsPage : ContentPage
 
 	private async void Button_Clicked(object sender, EventArgs e)
 	{
-        if (Email.Default.IsComposeSupported)
+		if (Email.Default.IsComposeSupported)
         {
 
             string subject = "Ruokalista BugReport";
@@ -148,5 +150,11 @@ public partial class SettingsPage : ContentPage
 				}
 			}
 		}
+	}
+
+
+	private void NotifBtn_Clicked(object sender, EventArgs e)
+	{
+		
 	}
 }

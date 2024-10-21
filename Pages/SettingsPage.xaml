@@ -31,30 +31,15 @@
 
 
             <Label Text="Ilmoitukset" FontSize="25" HorizontalOptions="Center"></Label>
+            <Label HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="Voit valita haluamasi ilmoituskategoriat puhelimen ilmoitusasetuksista. Voit esimerkikiksi päättää haluatko ilmoituksia vain kasvisruokalistasta tai ruokalistasta"></Label>
+            <Button x:Name="NotifBtn" Text="Avaa ilmoitusasetukset" Padding="0, 10" Clicked="NotifBtn_Clicked"></Button>
 
-            <Grid ColumnDefinitions="*,Auto">
-                <Label VerticalOptions="Center" FontSize="Body" Text="Ruokalista" Grid.Column="0" />
-                <Switch IsToggled="false" Scale="1.2" Grid.Column="1" HorizontalOptions="End" />
-
-            </Grid>
-
-            <Grid ColumnDefinitions="*,Auto">
-                <Label VerticalOptions="Center" FontSize="Body" Text="Kasvisruokalista" Grid.Column="0" />
-                <Switch IsToggled="false" Scale="1.2" Grid.Column="1" HorizontalOptions="End" />
-
-            </Grid>
-
-            <Grid ColumnDefinitions="*,Auto">
-                <Label VerticalOptions="Center" FontSize="Body" Text="Yleiset" Grid.Column="0" />
-                <Switch IsToggled="false" Scale="1.2" Grid.Column="1" HorizontalOptions="End" />
-
-            </Grid>
 
             <Label Text="Muuta" FontSize="25" HorizontalOptions="Center"></Label>
             
             <Grid ColumnDefinitions="*,Auto">
                 <Label VerticalOptions="Center" FontSize="Body" Text="Piilota kasvisruokalista" Grid.Column="0" />
-                <Switch IsToggled="false" Scale="1.2" Grid.Column="1" HorizontalOptions="End" />
+                <Switch IsToggled="false" Scale="1.2" x:Name="PiilotaKasvisruokalista" Grid.Column="1" HorizontalOptions="End" />
 
             </Grid>
 
