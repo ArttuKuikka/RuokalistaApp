@@ -24,8 +24,7 @@ public class MainActivity : MauiAppCompatActivity
 
         if(isFirstTime)
         {
-			//FirebaseMessaging.Instance.SubscribeToTopic("Ilmoitukset");
-			FirebaseMessaging.Instance.SubscribeToTopic("Testing");
+			FirebaseMessaging.Instance.SubscribeToTopic("Ilmoitukset");
 
 			if (OperatingSystem.IsOSPlatformVersionAtLeast("android", 26))
 			{
