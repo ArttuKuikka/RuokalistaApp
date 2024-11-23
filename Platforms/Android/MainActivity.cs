@@ -24,7 +24,10 @@ public class MainActivity : MauiAppCompatActivity
 
         if(isFirstTime)
         {
-			FirebaseMessaging.Instance.SubscribeToTopic("Ilmoitukset");
+			//poista vanha ruokalista firebasetopic
+			FirebaseMessaging.Instance.UnsubscribeFromTopic("Ilmoitukset");
+
+			FirebaseMessaging.Instance.SubscribeToTopic("Isokyro");
 
 			if (OperatingSystem.IsOSPlatformVersionAtLeast("android", 26))
 			{
